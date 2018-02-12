@@ -4,34 +4,32 @@ const mysql = require('mysql');
 const app = express();
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'me',
-  password: 'secret',
-  database: 'my_db'
+  host: 'iltgroup3.cp6f73a0po5w.eu-central-1.rds.amazonaws.com',
+  user: 'writeuser',
+  password: 'writepassword',
+  database: 'iltgroup3'
 });
 
-// connection.connect();
+connection.connect();
+
+app.use(express.static('static'));
 
 // Request mappings
 
-app.get('/', (req, res) => res.send('Hello World!'))
+//app.get('/', (req, res) => res.send('Hello World!'))
+
+app.get('/insert-test', (req, res) => {
+  connection.query('INSERT INTO questions (q) VALUES ("This is a sample question?");',
+    function(error, results, fields) {
+      if (error) throw error;
+      res.send(results);
+    });
+})
 
 app.get('/goodbye', (req, res) => {
   res.send('Goodbye World!')
 })
 
-// TODO
-app.get('db', (req, res) => {
-  connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-    if (error) {
-
-    } else {
-      res.send(results);
-    }
-  })
-})
 
 
-
-
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(8081, () => console.log('Example app listening on port 3000!'))
