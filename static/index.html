@@ -11,6 +11,31 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
+
+    <script>
+      function getData() {
+        $.ajax({
+          type: 'GET',
+          url: 'http://myapp-env.eu-central-1.elasticbeanstalk.com/getTeams',
+          xhrFields: {
+            withCredentials: false
+          },
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          success: function(data) {
+            console.log(data);
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      }
+
+      getData();
+
+    </script>
+
 </head>
 
 <body>
