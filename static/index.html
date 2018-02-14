@@ -6,33 +6,37 @@
     rel="stylesheet"
     type="text/css" />
 
+    <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    rel="stylesheet" type="text/css" />
+
     <script src="http://code.jquery.com/jquery-3.3.1.min.js">
     </script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
 
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js">
+    </script>
+
+
+
     <script>
-      function getData() {
+
+      $(document).ready(function() {
+
         $.ajax({
-          type: 'GET',
-          url: 'http://myapp-env.eu-central-1.elasticbeanstalk.com/getTeams',
-          xhrFields: {
-            withCredentials: false
-          },
-          headers: {
-            'Access-Control-Allow-Origin': '*'
-          },
-          success: function(data) {
-            console.log(data);
+          type:       "GET",
+          url:        "localhost:8081/getTeams",
+          success:    function(response) {
+              console.log(response);
+              $("#users").autocomplete({ source: response });
           },
           error: function(error) {
             console.log(error);
           }
         });
-      }
 
-      getData();
+      });
 
     </script>
 
@@ -48,48 +52,23 @@
     <div class="col-xs-6">
       <div class="panel panel-primary">
         <div class="panel-heading">
+
           <h3 class="panel-title">Question Form</h3>
+
         </div>
         <div class="panel-body">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Team Name
-              <span class="caret"></span>
-            </button>
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Team 1</a></li>
-              <li><a href="#">Team 2</a></li>
-              <li><a href="#">Team 3</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Team Default</a></li>
-            </ul>
-          </div>
-
-          <br />
-
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Member Name
-              <span class="caret"></span>
-            </button>
-
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Member 1</a></li>
-              <li><a href="#">Member 2</a></li>
-              <li><a href="#">Member 3</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Member Default</a></li>
-            </ul>
-          </div>
-
-
-          <!-- TODO -->
-
-          <br />
-          <hr />
-
-          <input type="submit" value="Submit" class="btn btn-success" />
+          <form action="/action_page.php">
+           <div class="form-group">
+             <label for="email">Username:</label>
+             <input id="users" type="text" class="form-control">
+           </div>
+           <div class="form-group">
+             <label for="pwd">Password:</label>
+             <input type="password" class="form-control">
+           </div>
+           <button type="submit" class="btn btn-default">Submit</button>
+          </form>
 
         </div>
       </div>
