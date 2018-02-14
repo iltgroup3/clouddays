@@ -23,10 +23,6 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-app.use(express.static('static'));
-
-// Request mappings
-
 
 // Register new user
 app.post('/register', (req, res) => {
@@ -75,6 +71,13 @@ app.post('/login', (req, res) => {
 
 app.get('/getQuestions', (req, res) => {
   connection.query('SELECT * FROM questions;', function(error, results, fields) {
+    if (error) throw error;
+    res.send(results);
+  })
+});
+
+app.post('/getTeams', (req, res) => {
+  connection.query('SELECT * FROM teams WHERE tid=' + (req.body.tid == undefined ? 'true' : req.body.tid) + ';', function(error, results, fields) {
     if (error) throw error;
     res.send(results);
   })
